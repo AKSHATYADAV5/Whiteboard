@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
-const connectToDB = require('./config/db')
+const connectDB = require('./config/db')
 const { Server } = require("socket.io");
 const http = require("http");
 const Canvas = require("./models/canvasModel");
@@ -24,7 +24,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/canvas", canvasRoutes);
 
 
-connectToDB();
+connectDB();
 
 const server = http.createServer(app);
 const io = new Server(server, {
