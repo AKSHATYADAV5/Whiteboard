@@ -70,9 +70,23 @@ const Sidebar = () => {
       await axios.delete(`https://api-whiteboard-az.onrender.com/api/canvas/delete/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      fetchCanvases();
-      setCanvasId(canvases[0]._id);
-      handleCanvasClick(canvases[0]._id);
+      const updatedCanvases = canvases.filter((c) => c._id !== id);
+      setCanvases(updatedCanvases);
+
+      if (updatedCanvases.length > 0) {
+        const newActiveId = updatedCanvases[0]._id;
+        setCanvasId(newActiveId);
+        handleCanvasClick(newActiveId);
+      } else {
+        const response = await axios.post(
+          'https://api-whiteboard-az.onrender.com/api/canvas/create',
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setCanvasId(response.data.canvasId);
+        handleCanvasClick(response.data.canvasId);
+        fetchCanvases();
+      }
     } catch (error) {
       console.error('Error deleting canvas:', error);
     }
