@@ -65,7 +65,7 @@ const Toolbox = () => {
                 <input
                   className={classes.colorPicker}
                   type="color"
-                  value={fillColor}
+                  value={strokeColor}
                   onChange={(e) => changeFill(activeToolItem, e.target.value)}
                 ></input>
               </div>
